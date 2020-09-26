@@ -1,6 +1,7 @@
 using GTracker.Application.Filter;
 using GTracker.Domain.Core.Notification;
 using GTracker.Infra.CrossCutting.IoC.DependencyInjection;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ namespace GTracker.Application
 {
     public class Startup
     {
-         public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
@@ -21,7 +22,7 @@ namespace GTracker.Application
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {           
+        {
             services.ConfigureDependenciesService();
 
             services.ConfigureDependenciesRepository(Configuration);
@@ -29,6 +30,8 @@ namespace GTracker.Application
             services.AddAutoMapperSetup();
 
             services.AddAuthJwt(Configuration);
+
+            services.AddMediatR(typeof(Startup));
 
             services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
             {
@@ -63,7 +66,7 @@ namespace GTracker.Application
 
             app.UseDefaultFiles();
 
-            app.UseStaticFiles();           
+            app.UseStaticFiles();
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin()

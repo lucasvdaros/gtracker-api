@@ -11,8 +11,8 @@
     <ProjectReference Include="..\GTracker.Domain\GTracker.Domain.csproj" />   
   </ItemGroup>
 
-  <ItemGroup>   
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />        
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
   </ItemGroup>
-
+  
 </Project>
