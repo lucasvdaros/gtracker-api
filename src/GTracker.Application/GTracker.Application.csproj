@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>    
+    <ProjectReference Include="..\GTracker.Infra.CrossCutting.IoC\GTracker.Infra.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\GTracker.Infra.Data\GTracker.Infra.Data.csproj" />    
+    <ProjectReference Include="..\GTracker.Service\GTracker.Service.csproj" />    
+    <ProjectReference Include="..\GTracker.Domain\GTracker.Domain.csproj" />   
+  </ItemGroup>
+
+  <ItemGroup>   
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />        
+  </ItemGroup>
+
+</Project>

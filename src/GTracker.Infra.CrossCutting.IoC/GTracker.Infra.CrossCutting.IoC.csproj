@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GTracker.Service\GTracker.Service.csproj" />
+    <ProjectReference Include="..\GTracker.Domain\GTracker.Domain.csproj" />
+    <ProjectReference Include="..\GTracker.Domain.Core\GTracker.Domain.Core.csproj" />    
+    <ProjectReference Include="..\GTracker.Infra.CrossCutting.Bus\GTracker.Infra.CrossCutting.Bus.csproj" />
+    <ProjectReference Include="..\GTracker.Infra.Data\GTracker.Infra.Data.csproj" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />    
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />    
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />    
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.8" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.2" />
+  </ItemGroup>
+
+</Project>
