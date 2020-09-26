@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+   <ItemGroup>
+    <ProjectReference Include="..\GTracker.Domain\GTracker.Domain.csproj" />
+    <ProjectReference Include="..\GTracker.Infra.Data\GTracker.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>
