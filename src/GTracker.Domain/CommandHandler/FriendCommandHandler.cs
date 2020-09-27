@@ -12,7 +12,8 @@ using MediatR;
 namespace GTracker.Domain.CommandHandler
 {
     public class FriendCommandHandler : CommandHandler,
-        IRequestHandler<RegisterNewFriendCommand, bool>
+        IRequestHandler<RegisterNewFriendCommand, bool>,
+        IRequestHandler<UpdateFriendCommand, bool>
     {
 
         private readonly IMediatorHandler _Bus;
@@ -50,6 +51,30 @@ namespace GTracker.Domain.CommandHandler
                 }
 
                 return Task.FromResult(false);
+            }
+        }
+
+        public async Task<bool> Handle(UpdateFriendCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+            else if (!_friendRepository.IsExistFriend(request.Id))
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not update friend. The informed Id friend does not exist"));
+                return false;
+            }
+            else
+            {
+                var friend = await _friendRepository.GetById(request.Id);
+                _Mapper.Map<UpdateFriendCommand, Friend>(request, friend);
+
+                _friendRepository.Update(friend);
+
+                return Commit();
             }
         }
     }

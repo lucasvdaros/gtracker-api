@@ -9,6 +9,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
         public CommandToEntityProfile()
         {
              CreateMap<RegisterNewFriendCommand, Friend>();
+             CreateMap<UpdateFriendCommand, Friend>();
         }
     }
 }

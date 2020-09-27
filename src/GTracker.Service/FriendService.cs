@@ -41,5 +41,12 @@ namespace GTracker.Service
             var registerCommand = _Mapper.Map<RegisterNewFriendCommand>(friend);
             await _Bus.SendCommand(registerCommand);
         }
+
+        public async Task Update(int id, UpdateFriendDTO friend)
+        {               
+            var updateCommand = _Mapper.Map<UpdateFriendCommand>(friend);
+            updateCommand.Id = id;
+            await _Bus.SendCommand(updateCommand);
+        }
     }
 }

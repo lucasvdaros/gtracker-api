@@ -15,6 +15,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
 
             // Friend
             CreateMap<CreateFriendDTO, RegisterNewFriendCommand>();
+            CreateMap<UpdateFriendDTO, UpdateFriendCommand>();
         }
     }
 }
