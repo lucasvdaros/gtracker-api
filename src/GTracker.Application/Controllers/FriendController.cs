@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using GTracker.Domain.DTO.Friend;
@@ -26,6 +27,20 @@ namespace GTracker.Application.Controllers
                 return Accepted();
             }
             catch (Exception e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]        
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var friends = await _friendService.GetAll();
+                return friends.Count() != 0 ? (IActionResult)Ok(friends) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
