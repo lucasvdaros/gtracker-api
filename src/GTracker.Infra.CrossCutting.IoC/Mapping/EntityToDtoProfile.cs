@@ -15,6 +15,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
             CreateMap<Friend, FriendDTO>();
 
             CreateMap<Game, GameDTO>();
+                
         }
     }
 }

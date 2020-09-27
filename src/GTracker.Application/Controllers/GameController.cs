@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using GTracker.Domain.DTO.Game;
@@ -28,6 +29,21 @@ namespace GTracker.Application.Controllers
                 return Accepted();
             }
             catch (Exception e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var games = await _gameService.GetAll();
+                return games.Count() != 0 ? (IActionResult)Ok(games) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }

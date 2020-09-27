@@ -7,7 +7,7 @@ namespace GTracker.Domain.EntityModel
     {
         public string Name { get; set; }
         public DateTime AquisicionDate { get; set; }
-        public string Kind { get; set; }
+        public int Kind { get; set; }
         public string Observation { get; set; }
     }
 }

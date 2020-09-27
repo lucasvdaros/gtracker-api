@@ -24,8 +24,7 @@ namespace GTracker.Infra.Data.Mapping
                 .IsRequired()
                 .HasColumnName("kind");
 
-            builder.Property(c => c.Observation)
-                .IsRequired()
+            builder.Property(c => c.Observation)                
                 .HasColumnName("observation");
         }
     }
