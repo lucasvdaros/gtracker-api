@@ -21,6 +21,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
 
             // Game
             CreateMap<CreateGameDTO, RegisterNewGameCommand>();
+            CreateMap<UpdateGameDTO, UpdateGameCommand>();
         }
     }
 }

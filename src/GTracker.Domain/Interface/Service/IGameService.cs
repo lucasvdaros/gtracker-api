@@ -9,5 +9,6 @@ namespace GTracker.Domain.Interface.Service
         Task Post(CreateGameDTO game);
         Task<IEnumerable<GameDTO>> GetAll();
         Task<GameDTO> GetById(int id);
+        Task Update(int id, UpdateGameDTO game);
     }
 }

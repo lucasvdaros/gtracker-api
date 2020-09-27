@@ -11,7 +11,8 @@ using MediatR;
 namespace GTracker.Domain.CommandHandler
 {
     public class GameCommandHandler : CommandHandler,
-        IRequestHandler<RegisterNewGameCommand, bool>
+        IRequestHandler<RegisterNewGameCommand, bool>,
+        IRequestHandler<UpdateGameCommand, bool>
     {
         private readonly IMediatorHandler _Bus;
         private readonly IMapper _Mapper;
@@ -48,6 +49,30 @@ namespace GTracker.Domain.CommandHandler
                 }
 
                 return Task.FromResult(false);
+            }
+        }
+
+        public async Task<bool> Handle(UpdateGameCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+            else if (!_gameRepository.IsExistGame(request.Id))
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not update game. The informed Id game does not exist"));
+                return false;
+            }
+            else
+            {
+                var game = await _gameRepository.GetById(request.Id);
+                _Mapper.Map<UpdateGameCommand, Game>(request, game);
+
+                _gameRepository.Update(game);
+
+                return Commit();
             }
         }
     }

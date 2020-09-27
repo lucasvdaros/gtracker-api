@@ -62,6 +62,21 @@ namespace GTracker.Application.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
-        }        
+        }
+
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateGameDTO game)
+        {
+            try
+            {
+                await _gameService.Update(id, game);
+                return Accepted();
+            }
+            catch (Exception e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

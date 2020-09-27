@@ -10,7 +10,7 @@ namespace GTracker.Infra.Data.Repository
         {
         }
 
-        public bool IsExistFriend(int id)
+        public bool IsExistGame(int id)
         {
             return dbSet.Any(g => g.Id == id);
         }

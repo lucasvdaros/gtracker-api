@@ -16,7 +16,7 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
 
             // Game
             serviceCollection.AddScoped<IRequestHandler<RegisterNewGameCommand, bool>, GameCommandHandler>();
-            
+            serviceCollection.AddScoped<IRequestHandler<UpdateGameCommand, bool>, GameCommandHandler>();            
         }
     }
 }

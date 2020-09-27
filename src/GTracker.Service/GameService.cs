@@ -41,5 +41,12 @@ namespace GTracker.Service
             var registerCommand = _Mapper.Map<RegisterNewGameCommand>(game);
             await _Bus.SendCommand(registerCommand);
         }
+
+        public async Task Update(int id, UpdateGameDTO game)
+        {
+            var updateCommand = _Mapper.Map<UpdateGameCommand>(game);
+            updateCommand.Id = id;
+            await _Bus.SendCommand(updateCommand);
+        }
     }
 }
