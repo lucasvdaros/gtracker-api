@@ -11,6 +11,7 @@ namespace GTracker.Infra.Data
         {
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new FriendMap());
+            modelBuilder.ApplyConfiguration(new GameMap());
 
             base.OnModelCreating(modelBuilder);
         }

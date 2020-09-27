@@ -22,7 +22,8 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
             serviceCollection.AddScoped<GTrackerContext>();
             
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
-            serviceCollection.AddScoped<IFriendRepository, FriendRepository>();            
+            serviceCollection.AddScoped<IFriendRepository, FriendRepository>();
+            serviceCollection.AddScoped<IGameRepository, GameRepository>();            
         }
     }
 }
