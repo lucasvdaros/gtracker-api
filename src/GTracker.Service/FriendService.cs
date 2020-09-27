@@ -31,6 +31,11 @@ namespace GTracker.Service
                     .Select(f => _Mapper.Map<FriendDTO>(f));
         }
 
+        public async Task<FriendDTO> GetById(int id)
+        {
+            return _Mapper.Map<FriendDTO>(await _friendRepository.GetById(id));
+        }
+
         public async Task Post(CreateFriendDTO friend)
         {
             var registerCommand = _Mapper.Map<RegisterNewFriendCommand>(friend);

@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using GTracker.Domain.DTO.Friend;
 using GTracker.Domain.Interface.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GTracker.Application.Controllers
@@ -18,7 +19,8 @@ namespace GTracker.Application.Controllers
             _friendService = friendService;
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Post([FromBody] CreateFriendDTO friend)
         {
             try
@@ -32,13 +34,29 @@ namespace GTracker.Application.Controllers
             }
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             try
             {
                 var friends = await _friendService.GetAll();
                 return friends.Count() != 0 ? (IActionResult)Ok(friends) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetbyId([FromRoute] int id)
+        {
+            try
+            {
+                var city = await _friendService.GetById(id);
+                return city != null ? (IActionResult)Ok(city) : (IActionResult)NoContent();
             }
             catch (ArgumentException e)
             {

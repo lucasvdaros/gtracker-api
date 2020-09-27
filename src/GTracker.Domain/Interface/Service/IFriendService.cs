@@ -8,5 +8,6 @@ namespace GTracker.Domain.Interface.Service
     {
         Task Post(CreateFriendDTO friend);
         Task<IEnumerable<FriendDTO>> GetAll();
+        Task<FriendDTO> GetById(int id);
     }
 }
