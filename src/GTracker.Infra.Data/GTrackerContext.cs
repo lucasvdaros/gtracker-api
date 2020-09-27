@@ -1,3 +1,4 @@
+using GTracker.Infra.Data.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace GTracker.Infra.Data
@@ -8,7 +9,9 @@ namespace GTracker.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new UserMap());
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

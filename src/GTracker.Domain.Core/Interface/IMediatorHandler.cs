@@ -6,7 +6,7 @@ namespace GTracker.Domain.Core.Interface
 {
     public interface IMediatorHandler
     {
-        Task SendCommand<T>(T command) where T : Command;
+        Task<bool> SendCommand<T>(T command) where T : Command;
         Task RaiseEvent<T>(T @event) where T : Event;
     }
 }

@@ -15,7 +15,8 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
                 options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
             );
 
-            serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));            
+            serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+            serviceCollection.AddScoped<IUserRepository, UserRepository>();            
         }
     }
 }

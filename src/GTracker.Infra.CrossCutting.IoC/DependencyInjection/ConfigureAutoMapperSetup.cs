@@ -10,7 +10,8 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
         {
             var config = new AutoMapper.MapperConfiguration(cfg =>
             {
-                 cfg.AddProfile(new DtoToEntityProfile());
+                 cfg.AddProfile(new DtoToCommandProfile());
+                 cfg.AddProfile(new CommandToEntityProfile());
                  cfg.AddProfile(new EntityToDtoProfile());                
             });
 

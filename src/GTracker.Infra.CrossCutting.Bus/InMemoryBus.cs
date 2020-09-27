@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using FluentValidation.Results;
 using GTracker.Domain.Core.Commands;
 using GTracker.Domain.Core.Events;
 using GTracker.Domain.Core.Interface;
@@ -15,7 +16,7 @@ namespace GTracker.Infra.CrossCutting.Bus
             _mediator = mediator;
         }
 
-        public Task SendCommand<T>(T command) where T : Command
+        public Task<bool> SendCommand<T>(T command) where T : Command
         {
             return _mediator.Send(command);
         }
