@@ -14,21 +14,26 @@ namespace GTracker.Service
     {
         private readonly IMapper _Mapper;
         private readonly IMediatorHandler _Bus;
-        private readonly IGameRepository _gameRespository;
+        private readonly IGameRepository _gameRepository;
 
         public GameService(IMapper mapper,
                             IMediatorHandler bus,
-                            IGameRepository gameRespository)
+                            IGameRepository gameRepository)
         {
             _Mapper = mapper;
             _Bus = bus;
-            _gameRespository = gameRespository;
+            _gameRepository = gameRepository;
         }
 
         public async Task<IEnumerable<GameDTO>> GetAll()
         {
-            return (await _gameRespository.GetAll())
+            return (await _gameRepository.GetAll())
                     .Select(f => _Mapper.Map<GameDTO>(f));            
+        }
+
+        public async Task<GameDTO> GetById(int id)
+        {
+            return _Mapper.Map<GameDTO>(await _gameRepository.GetById(id));
         }
 
         public async Task Post(CreateGameDTO game)

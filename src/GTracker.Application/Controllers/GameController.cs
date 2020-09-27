@@ -47,6 +47,21 @@ namespace GTracker.Application.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
+        }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetbyId([FromRoute] int id)
+        {
+            try
+            {
+                var city = await _gameService.GetById(id);
+                return city != null ? (IActionResult)Ok(city) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
         }        
     }
 }
