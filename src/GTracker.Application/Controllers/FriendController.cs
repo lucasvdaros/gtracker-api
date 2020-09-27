@@ -55,8 +55,8 @@ namespace GTracker.Application.Controllers
         {
             try
             {
-                var city = await _friendService.GetById(id);
-                return city != null ? (IActionResult)Ok(city) : (IActionResult)NoContent();
+                var friend = await _friendService.GetById(id);
+                return friend != null ? (IActionResult)Ok(friend) : (IActionResult)NoContent();
             }
             catch (ArgumentException e)
             {
