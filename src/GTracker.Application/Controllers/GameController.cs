@@ -34,6 +34,28 @@ namespace GTracker.Application.Controllers
             }
         }
 
+        [HttpGet("filter")]
+        [Authorize]
+        public async Task<IActionResult> Get([FromQuery] string name = null,
+                                            [FromQuery] DateTime? dtbeg = null,
+                                            [FromQuery] DateTime? dtend = null,
+                                            [FromQuery] int? kind = null,                                            
+                                            [FromQuery] int skip = 1,
+                                            [FromQuery] int take = 12)
+        {
+            try
+            {
+                var games = await _gameService.GetFiltered(name, dtbeg, dtend, kind, skip, take);
+
+                return games.Count() != 0 ? (IActionResult)Ok(games) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetAll()
@@ -55,15 +77,15 @@ namespace GTracker.Application.Controllers
         {
             try
             {
-                var city = await _gameService.GetById(id);
-                return city != null ? (IActionResult)Ok(city) : (IActionResult)NoContent();
+                var game = await _gameService.GetById(id);
+                return game != null ? (IActionResult)Ok(game) : (IActionResult)NoContent();
             }
             catch (ArgumentException e)
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
-
+        
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateGameDTO game)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,12 +29,18 @@ namespace GTracker.Service
         public async Task<IEnumerable<GameDTO>> GetAll()
         {
             return (await _gameRepository.GetAll())
-                    .Select(f => _Mapper.Map<GameDTO>(f));            
+                    .Select(g => _Mapper.Map<GameDTO>(g));            
         }
 
         public async Task<GameDTO> GetById(int id)
         {
             return _Mapper.Map<GameDTO>(await _gameRepository.GetById(id));
+        }
+
+        public async Task<IEnumerable<GameDTO>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int skip, int take)
+        {
+            return (await _gameRepository.GetFiltered(name, dtbeg, dtend,kind, skip, take))
+                    .Select(f => _Mapper.Map<GameDTO>(f));
         }
 
         public async Task Post(CreateGameDTO game)
