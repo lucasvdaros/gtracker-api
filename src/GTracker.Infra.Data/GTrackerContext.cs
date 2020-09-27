@@ -10,6 +10,7 @@ namespace GTracker.Infra.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new FriendMap());
 
             base.OnModelCreating(modelBuilder);
         }

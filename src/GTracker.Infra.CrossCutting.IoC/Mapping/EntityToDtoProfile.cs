@@ -8,7 +8,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
     {
         public EntityToDtoProfile()
         {
-             CreateMap<User, UserDTO>();
+            CreateMap<User, UserDTO>();
         }
     }
 }

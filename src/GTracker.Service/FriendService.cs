@@ -19,10 +19,10 @@ namespace GTracker.Service
             _Bus = bus;
         }
 
-        // public Task<FriendDTO> Post(CreateFriendDTO friend)
-        // {
-        //     var registerCommand = _Mapper.Map<RegisterNewFriendCommand>(friend);
-        //     return (Task<FriendDTO>)_Bus.SendCommand(registerCommand);
-        // }
+        public async Task Post(CreateFriendDTO friend)
+        {
+            var registerCommand = _Mapper.Map<RegisterNewFriendCommand>(friend);
+            await _Bus.SendCommand(registerCommand);
+        }
     }
 }

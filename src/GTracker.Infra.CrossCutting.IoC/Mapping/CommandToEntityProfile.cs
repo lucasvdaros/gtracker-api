@@ -1,4 +1,6 @@
 using AutoMapper;
+using GTracker.Domain.Commands.Friend;
+using GTracker.Domain.EntityModel;
 
 namespace GTracker.Infra.CrossCutting.IoC.Mapping
 {
@@ -6,7 +8,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
     {
         public CommandToEntityProfile()
         {
-            
+             CreateMap<RegisterNewFriendCommand, Friend>();
         }
     }
 }

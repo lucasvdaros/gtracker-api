@@ -27,6 +27,8 @@ namespace GTracker.Application
 
             services.ConfigureDependenciesRepository(Configuration);
 
+            services.ConfigureDependenciesHandler();
+
             services.AddAutoMapperSetup();
 
             services.AddAuthJwt(Configuration);

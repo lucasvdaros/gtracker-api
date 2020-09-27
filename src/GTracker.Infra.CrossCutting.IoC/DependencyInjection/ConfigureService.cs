@@ -20,6 +20,7 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
             serviceCollection.AddScoped<IPasswordService, PasswordService>();
             serviceCollection.AddScoped<ITokenService, TokenService>();
             serviceCollection.AddScoped<IUserService, UserService>();
+            serviceCollection.AddScoped<IFriendService, FriendService>();
         }
     }
 }
