@@ -33,7 +33,7 @@ namespace GTracker.Domain.Validation.Game
         {
             RuleFor(f => f.Observation)
                 .MaximumLength(250)
-                    .WithMessage("Observation must be a maximum of 50 characters");    
+                    .WithMessage("Observation must be a maximum of 250 characters");    
         }
     }
 }
