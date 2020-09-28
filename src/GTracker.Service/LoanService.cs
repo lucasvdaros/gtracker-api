@@ -26,6 +26,11 @@ namespace GTracker.Service
             _loanRepository = loanRepository;
         }
 
+        public async Task<LoanDTO> GetById(int id)
+        {
+            return _Mapper.Map<LoanDTO>(await _loanRepository.GetById(id));
+        }
+
         public async Task<IEnumerable<LoanDTO>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int skip, int take)
         {
             return (await _loanRepository.GetFiltered(friendId, dtbeg, dtend, skip, take))

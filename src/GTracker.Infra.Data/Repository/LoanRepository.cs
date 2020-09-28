@@ -14,6 +14,21 @@ namespace GTracker.Infra.Data.Repository
         {
         }
 
+        public override async Task<Loan> GetById(int id)
+        {
+            var item = await dbSet.Include(f => f.Friend)
+                                .Include(lg => lg.LoanGames)
+                                    .ThenInclude(g => g.Game)
+                                .Where(l => l.Id == id)
+                                .FirstOrDefaultAsync();
+
+            item.LoanGames = context.Set<LoanGame>()
+                                    .Include(lg => lg.Game)
+                                    .Where(g => g.LoanId == item.Id)
+                                    .ToList();
+            return item;
+        }
+
         public async Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int skip, int take)
         {
             var query = dbSet.Include(l => l.LoanGames)

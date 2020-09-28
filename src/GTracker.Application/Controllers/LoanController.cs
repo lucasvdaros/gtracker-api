@@ -53,5 +53,20 @@ namespace GTracker.Application.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetbyId([FromRoute] int id)
+        {
+            try
+            {
+                var loan = await _loanService.GetById(id);
+                return loan != null ? (IActionResult)Ok(loan) : (IActionResult)NoContent();
+            }
+            catch (ArgumentException e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }
