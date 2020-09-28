@@ -1,6 +1,7 @@
 using AutoMapper;
 using GTracker.Domain.Commands.Friend;
 using GTracker.Domain.Commands.Game;
+using GTracker.Domain.Commands.Loan;
 using GTracker.Domain.EntityModel;
 
 namespace GTracker.Infra.CrossCutting.IoC.Mapping
@@ -13,9 +14,12 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
              CreateMap<RegisterNewFriendCommand, Friend>();
              CreateMap<UpdateFriendCommand, Friend>();
 
-             //Game
+             // Game
              CreateMap<RegisterNewGameCommand, Game>();
              CreateMap<UpdateGameCommand, Game>();
+
+             // Loan
+             CreateMap<RegisterNewLoanCommand, Loan>();
         }
     }
 }

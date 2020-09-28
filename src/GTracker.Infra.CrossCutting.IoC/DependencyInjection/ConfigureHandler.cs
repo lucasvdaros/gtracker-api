@@ -1,6 +1,7 @@
 using GTracker.Domain.CommandHandler;
 using GTracker.Domain.Commands.Friend;
 using GTracker.Domain.Commands.Game;
+using GTracker.Domain.Commands.Loan;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,7 +17,10 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
 
             // Game
             serviceCollection.AddScoped<IRequestHandler<RegisterNewGameCommand, bool>, GameCommandHandler>();
-            serviceCollection.AddScoped<IRequestHandler<UpdateGameCommand, bool>, GameCommandHandler>();            
+            serviceCollection.AddScoped<IRequestHandler<UpdateGameCommand, bool>, GameCommandHandler>();
+
+            // Loan
+            serviceCollection.AddScoped<IRequestHandler<RegisterNewLoanCommand, bool>, LoanCommandHandler>();            
         }
     }
 }

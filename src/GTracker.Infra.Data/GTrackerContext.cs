@@ -12,6 +12,8 @@ namespace GTracker.Infra.Data
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new FriendMap());
             modelBuilder.ApplyConfiguration(new GameMap());
+            modelBuilder.ApplyConfiguration(new LoanMap());
+            modelBuilder.ApplyConfiguration(new LoanGameMap());
 
             base.OnModelCreating(modelBuilder);
         }

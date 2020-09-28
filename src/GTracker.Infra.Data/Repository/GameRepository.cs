@@ -43,9 +43,36 @@ namespace GTracker.Infra.Data.Repository
             return await query.ToListAsync();
         }
 
+        public async Task<IList<LoanGame>> GetLoanGamesById(IList<int> gamesId)
+        {
+            List<LoanGame> games = new List<LoanGame>();
+
+            foreach (var id in gamesId)
+            {
+                var loanGame = new LoanGame();
+                var game = await GetById(id);
+
+                loanGame.Game = game;
+                loanGame.LoanStatus = 0;
+                games.Add(loanGame);
+            }
+
+            return games;
+        }
+
         public bool IsExistGame(int id)
         {
             return dbSet.Any(g => g.Id == id);
+        }
+
+        public bool IsExistGames(IList<int> gamesId)
+        {
+            foreach (var id in gamesId)
+            {
+                if (!dbSet.Any(g => g.Id == id)) return false;
+            }
+
+            return true;
         }
     }
 }

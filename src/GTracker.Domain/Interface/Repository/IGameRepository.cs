@@ -9,5 +9,7 @@ namespace GTracker.Domain.Interface.Repository
     {
         bool IsExistGame(int id);
         Task<IEnumerable<Game>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int skip, int take);
+        Task<IList<LoanGame>> GetLoanGamesById(IList<int> gamesId);
+        bool IsExistGames(IList<int> gamesId);
     }
 }

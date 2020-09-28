@@ -22,6 +22,7 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<IFriendService, FriendService>();
             serviceCollection.AddScoped<IGameService, GameService>();
+            serviceCollection.AddScoped<ILoanService, LoanService>();
         }
     }
 }
