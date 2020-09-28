@@ -55,7 +55,6 @@ namespace GTracker.Application.Controllers
             }
         }
 
-
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetAll()
