@@ -1,12 +1,5 @@
 CREATE DATABASE `gtracker-db` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-CREATE TABLE Friend (
-	id int PRIMARY KEY IDENTITY(1,1),
-	name varchar(50) NOT NULL,
-	phone varchar(50) NOT NULL,
-	email varchar(50) NULL
-)
-
 CREATE TABLE `Friend` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
