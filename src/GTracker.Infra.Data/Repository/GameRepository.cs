@@ -16,7 +16,8 @@ namespace GTracker.Infra.Data.Repository
 
         public async Task<IEnumerable<Game>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int skip, int take)
         {
-            var query = dbSet.AsQueryable();
+            var query = dbSet.Include(gl => gl.LoanGames)
+                        .AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -40,7 +41,16 @@ namespace GTracker.Infra.Data.Repository
 
             query = ApplyPagination(query, skip, take);
 
-            return await query.ToListAsync();
+            var lista = await query.ToListAsync();
+
+            foreach (var item in lista)
+            {
+                item.LoanGames = context.Set<LoanGame>()                                    
+                                    .Where(ap => ap.GameId == item.Id)
+                                    .ToList();
+            }
+
+            return lista;
         }
 
         public async Task<IList<LoanGame>> GetLoanGamesById(IList<int> gamesId)

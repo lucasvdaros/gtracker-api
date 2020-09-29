@@ -16,11 +16,15 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
 
             CreateMap<Friend, FriendDTO>();
 
-            CreateMap<Game, GameDTO>();
+            CreateMap<Game, GameDTO>()
+                .ForMember(g => g.Status, opts =>
+                    opts.MapFrom(g => g.LoanGames.Select(lg => lg.LoanStatus)))
+                .ForMember(g => g.DataTerminoEmprestimo, opts =>
+                    opts.MapFrom(g => g.LoanGames.Select(lg => lg.DataEnd)));
 
             CreateMap<Loan, LoanDTO>()
                 .ForMember(l => l.Games, opts =>
-                    opts.MapFrom(g => g.LoanGames.Select(gg => gg.Game)));                
+                    opts.MapFrom(g => g.LoanGames.Select(gg => gg.Game)));
         }
     }
 }

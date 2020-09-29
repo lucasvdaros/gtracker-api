@@ -34,7 +34,7 @@ namespace GTracker.Application.Controllers
             }
         }
 
-        [HttpGet("filter")]
+        [HttpGet]
         [Authorize]
         public async Task<IActionResult> Get([FromQuery] string name = null,
                                             [FromQuery] DateTime? dtbeg = null,
@@ -53,22 +53,7 @@ namespace GTracker.Application.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetAll()
-        {
-            try
-            {
-                var games = await _gameService.GetAll();
-                return games.Count() != 0 ? (IActionResult)Ok(games) : (IActionResult)NoContent();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
+        }       
 
         [HttpGet("{id}")]
         [Authorize]

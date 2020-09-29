@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GTracker.Domain.DTO.Game
 {
@@ -9,5 +10,14 @@ namespace GTracker.Domain.DTO.Game
         public DateTime AquisicionDate { get; set; }
         public int Kind { get; set; }
         public string Observation { get; set; }
+
+        public IList<int> Status { get; set; }
+        public IList<DateTime?> DataTerminoEmprestimo { get; set; }
+
+        public GameDTO()
+        {
+            Status = new List<int>();
+            DataTerminoEmprestimo = new List<DateTime?>();
+        }
     }
 }
