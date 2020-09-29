@@ -53,6 +53,12 @@ namespace GTracker.Domain.CommandHandler
                         "Could not create loan. Some informed games does not exist"));
                 return false;
             }
+            else if ((_loanGameRepository.NotAvailableGames(request.GamesId).Count) != 0)
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not create loan. Some informed games are borrowed to someone"));
+                return false;
+            }
             else
             {
                 var newLoan = _Mapper.Map<Loan>(request);
@@ -77,6 +83,18 @@ namespace GTracker.Domain.CommandHandler
             {
                 await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
                         "Could not finish loan. The informed games does not exist"));
+                return false;
+            }
+            else if (!_loanGameRepository.BelongToLoan(request.LoanId, request.GameId))
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not finish loan. The informed game does not belong to this loan"));
+                return false;
+            }            
+            else if (!_loanGameRepository.IsBorrowedGame(request.GameId))
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not finish loan. The informed game is not borrowed"));
                 return false;
             }
             else
