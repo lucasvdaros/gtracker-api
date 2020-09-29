@@ -29,7 +29,7 @@ namespace GTracker.Infra.Data.Repository
             return item;
         }
 
-        public async Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int skip, int take)
+        public async Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int? status, int skip, int take)
         {
             var query = dbSet.Include(l => l.LoanGames)
                                 .ThenInclude(g => g.Game)
@@ -49,6 +49,13 @@ namespace GTracker.Infra.Data.Repository
             if (friendId != null)
             {
                 query = query.Where(u => u.FriendId == friendId);
+            }
+
+            if (status != null)
+            {
+                query = query.SelectMany(a => a.LoanGames)
+                            .Where(ap => ap.LoanStatus == status)
+                             .Select(ap => ap.Loan);
             }
 
             query = ApplyPagination(query, skip, take);

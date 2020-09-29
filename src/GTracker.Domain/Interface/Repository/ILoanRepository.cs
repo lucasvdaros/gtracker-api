@@ -7,6 +7,6 @@ namespace GTracker.Domain.Interface.Repository
 {
     public interface ILoanRepository : IRepository<Loan>
     {
-        Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int skip, int take);
+        Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int? status, int skip, int take);
     }
 }

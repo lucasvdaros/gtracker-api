@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using GTracker.Domain.DTO.Loan;
+using GTracker.Domain.Enum;
 using GTracker.Domain.Interface.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,13 +39,14 @@ namespace GTracker.Application.Controllers
         [Authorize]
         public async Task<IActionResult> Get([FromQuery] int? friendId = null,
                                             [FromQuery] DateTime? dtbeg = null,
-                                            [FromQuery] DateTime? dtend = null,                                            
+                                            [FromQuery] DateTime? dtend = null,
+                                            [FromQuery] int? status = null,
                                             [FromQuery] int skip = 1,
                                             [FromQuery] int take = 12)
         {
             try
             {
-                var loans = await _loanService.GetFiltered(friendId, dtbeg, dtend, skip, take);
+                var loans = await _loanService.GetFiltered(friendId, dtbeg, dtend, status, skip, take);
 
                 return loans.Count() != 0 ? (IActionResult)Ok(loans) : (IActionResult)NoContent();
             }
