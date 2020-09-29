@@ -39,13 +39,14 @@ namespace GTracker.Application.Controllers
         public async Task<IActionResult> Get([FromQuery] string name = null,
                                             [FromQuery] DateTime? dtbeg = null,
                                             [FromQuery] DateTime? dtend = null,
-                                            [FromQuery] int? kind = null,                                            
+                                            [FromQuery] int? kind = null,
+                                            [FromQuery] int? status = null,                                            
                                             [FromQuery] int skip = 1,
                                             [FromQuery] int take = 12)
         {
             try
             {
-                var games = await _gameService.GetFiltered(name, dtbeg, dtend, kind, skip, take);
+                var games = await _gameService.GetFiltered(name, dtbeg, dtend, kind, status, skip, take);
 
                 return games.Count() != 0 ? (IActionResult)Ok(games) : (IActionResult)NoContent();
             }

@@ -28,10 +28,10 @@ namespace GTracker.Infra.Data.Repository
                                     .ToList();
             return item;
         }
-
         public async Task<IEnumerable<Loan>> GetFiltered(int? friendId, DateTime? dtbeg, DateTime? dtend, int? status, int skip, int take)
         {
-            var query = dbSet.Include(l => l.LoanGames)
+            var query = dbSet.Include(f => f.Friend)
+                            .Include(l => l.LoanGames)
                                 .ThenInclude(g => g.Game)
                             .Include(f => f.Friend)
                             .AsQueryable();
@@ -55,7 +55,9 @@ namespace GTracker.Infra.Data.Repository
             {
                 query = query.SelectMany(a => a.LoanGames)
                             .Where(ap => ap.LoanStatus == status)
-                             .Select(ap => ap.Loan);
+                             .Select(ap => ap.Loan)
+                             .Distinct()
+                             .OrderBy(l => l.Id);
             }
 
             query = ApplyPagination(query, skip, take);
@@ -66,7 +68,7 @@ namespace GTracker.Infra.Data.Repository
                 item.LoanGames = context.Set<LoanGame>()
                                     .Include(a => a.Game)
                                     .Where(ap => ap.LoanId == item.Id)
-                                    .ToList();
+                                    .ToList();                
             }
 
             return lista;

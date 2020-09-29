@@ -37,9 +37,9 @@ namespace GTracker.Service
             return _Mapper.Map<GameDTO>(await _gameRepository.GetById(id));
         }
 
-        public async Task<IEnumerable<GameDTO>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int skip, int take)
+        public async Task<IEnumerable<GameDTO>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int? status, int skip, int take)
         {
-            return (await _gameRepository.GetFiltered(name, dtbeg, dtend,kind, skip, take))
+            return (await _gameRepository.GetFiltered(name, dtbeg, dtend, kind, status, skip, take))
                     .Select(f => _Mapper.Map<GameDTO>(f));
         }
 

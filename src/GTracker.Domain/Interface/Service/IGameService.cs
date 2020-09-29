@@ -10,7 +10,7 @@ namespace GTracker.Domain.Interface.Service
         Task Post(CreateGameDTO game);
         Task<IEnumerable<GameDTO>> GetAll();
         Task<GameDTO> GetById(int id);
-        Task<IEnumerable<GameDTO>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int skip, int take);
+        Task<IEnumerable<GameDTO>> GetFiltered(string name, DateTime? dtbeg, DateTime? dtend, int? kind, int? status, int skip, int take);
         Task Update(int id, UpdateGameDTO game);
     }
 }
