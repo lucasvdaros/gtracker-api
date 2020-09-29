@@ -26,6 +26,13 @@ namespace GTracker.Service
             _loanRepository = loanRepository;
         }
 
+        public async Task FinishLoan(int id, FinishLoanDTO loan)
+        {
+            var finishCommand = _Mapper.Map<FinishLoanCommand>(loan);
+            finishCommand.LoanId = id;
+            await _Bus.SendCommand(finishCommand);
+        }
+
         public async Task<LoanDTO> GetById(int id)
         {
             return _Mapper.Map<LoanDTO>(await _loanRepository.GetById(id));

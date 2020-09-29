@@ -68,5 +68,20 @@ namespace GTracker.Application.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
             }
         }
+
+        [HttpPatch("finish/{id}")]
+        [Authorize]
+        public async Task<IActionResult> FinishLoan([FromRoute] int id, [FromBody] FinishLoanDTO loan)
+        {
+            try
+            {
+                await _loanService.FinishLoan(id, loan);
+                return Accepted();
+            }
+            catch (Exception e)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace GTracker.Infra.CrossCutting.IoC.Mapping
 
             // Loan
             CreateMap<CreateLoanDTO, RegisterNewLoanCommand>();
+            CreateMap<FinishLoanDTO, FinishLoanCommand>();
         }
     }
 }

@@ -20,7 +20,8 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
             serviceCollection.AddScoped<IRequestHandler<UpdateGameCommand, bool>, GameCommandHandler>();
 
             // Loan
-            serviceCollection.AddScoped<IRequestHandler<RegisterNewLoanCommand, bool>, LoanCommandHandler>();            
+            serviceCollection.AddScoped<IRequestHandler<RegisterNewLoanCommand, bool>, LoanCommandHandler>();
+            serviceCollection.AddScoped<IRequestHandler<FinishLoanCommand, bool>, LoanCommandHandler>();            
         }
     }
 }

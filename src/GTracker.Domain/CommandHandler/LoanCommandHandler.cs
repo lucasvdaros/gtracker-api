@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,12 +14,14 @@ using MediatR;
 namespace GTracker.Domain.CommandHandler
 {
     public class LoanCommandHandler : CommandHandler,
-        IRequestHandler<RegisterNewLoanCommand, bool>
+        IRequestHandler<RegisterNewLoanCommand, bool>,
+        IRequestHandler<FinishLoanCommand, bool>
     {
         private readonly IMediatorHandler _Bus;
         private readonly IMapper _Mapper;
         private readonly ILoanRepository _loanRepository;
         private readonly IGameRepository _gameRepository;
+        private readonly ILoanGameRepository _loanGameRepository;
         private readonly DomainNotificationHandler _notifications;
 
         public LoanCommandHandler(IUnitOfWork uow,
@@ -26,14 +29,16 @@ namespace GTracker.Domain.CommandHandler
                                 IMapper mapper,
                                 ILoanRepository loanRepository,
                                 IGameRepository gameRepository,
+                                ILoanGameRepository loanGameRepository,
                                 INotificationHandler<DomainNotification> notifications) : base(uow, bus, notifications)
         {
             _Bus = bus;
             _Mapper = mapper;
             _loanRepository = loanRepository;
             _gameRepository = gameRepository;
+            _loanGameRepository = loanGameRepository;
             _notifications = (DomainNotificationHandler)notifications;
-        }       
+        }
 
         public async Task<bool> Handle(RegisterNewLoanCommand request, CancellationToken cancellationToken)
         {
@@ -56,6 +61,33 @@ namespace GTracker.Domain.CommandHandler
                                     await _gameRepository.GetLoanGamesById(request.GamesId);
 
                 await _loanRepository.Add(newLoan);
+
+                return Commit();
+            }
+        }
+
+        public async Task<bool> Handle(FinishLoanCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.IsValid())
+            {
+                NotifyValidationErrors(request);
+                return false;
+            }
+            else if (!_gameRepository.IsExistGame(request.GameId))
+            {
+                await _Bus.RaiseEvent(new DomainNotification(request.MessageType,
+                        "Could not finish loan. The informed games does not exist"));
+                return false;
+            }
+            else
+            {
+                var loanGame =
+                    await _loanGameRepository.getByIds(request.LoanId, request.GameId);
+
+                loanGame.LoanStatus = (int)StatusLoanEnum.RETURNED;
+                loanGame.DataEnd = DateTime.Now;
+
+                _loanGameRepository.Update(loanGame);
 
                 return Commit();
             }

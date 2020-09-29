@@ -4,9 +4,12 @@ using GTracker.Domain.Validation.Loan;
 namespace GTracker.Domain.Commands.Loan
 {
     public class RegisterNewLoanCommand : LoanCommand
-    {
-        public RegisterNewLoanCommand(IList<int> gamesId) : base(gamesId)
+    {   
+        public IList<int> GamesId { get; set; }
+      
+        public RegisterNewLoanCommand()
         {
+            GamesId = new List<int>();
         }
 
         public override bool IsValid()
