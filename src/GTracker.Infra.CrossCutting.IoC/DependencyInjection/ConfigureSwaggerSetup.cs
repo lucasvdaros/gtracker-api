@@ -18,7 +18,7 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
                 {
                     Title = "API de informações ",
                     Version = "v1",
-                    Description = "API a ser consumida pelo GTracker",
+                    Description = "Para o obter o Token: login: admin | password: senhalegal",
                     Contact = new OpenApiContact
                     {
                         Name = "Lucas Daros",
