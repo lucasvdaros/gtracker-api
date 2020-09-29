@@ -14,7 +14,7 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
         public static void ConfigureDependenciesRepository(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             serviceCollection.AddDbContext<GTrackerContext>(
-                options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+                options => options.UseMySql(configuration.GetConnectionString("DefaultConnection"))
             );
 
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
