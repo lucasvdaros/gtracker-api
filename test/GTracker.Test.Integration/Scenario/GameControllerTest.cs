@@ -79,31 +79,31 @@ namespace GTracker.Test.Integration.Scenario
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
 
-        [Fact]
-        public async Task Post_GivenGame_WhenValid_ThenAcceptResponse()
-        {
-            // Arrange
-            var newGame = new CreateGameDTO
-            {
-                Name = "FIFA",
-                AquisicionDate = DateTime.Now.AddDays(-30),
-                Kind = "1",
-                Observation = "UM jogo muito legal"
-            };
+        // [Fact]
+        // public async Task Post_GivenGame_WhenValid_ThenAcceptResponse()
+        // {
+        //     // Arrange
+        //     var newGame = new CreateGameDTO
+        //     {
+        //         Name = "FIFA",
+        //         AquisicionDate = DateTime.Now.AddDays(-30),
+        //         Kind = "1",
+        //         Observation = "UM jogo muito legal"
+        //     };
 
-            var myContent = JsonConvert.SerializeObject(newGame);
+        //     var myContent = JsonConvert.SerializeObject(newGame);
 
-            var buffer = Encoding.UTF8.GetBytes(myContent);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var token = await GetToken();
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //     var buffer = Encoding.UTF8.GetBytes(myContent);
+        //     var byteContent = new ByteArrayContent(buffer);
+        //     byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        //     var token = await GetToken();
+        //     _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            // Act
-            var response = await _client.PostAsync("/gtracker/game", byteContent);
+        //     // Act
+        //     var response = await _client.PostAsync("/gtracker/game", byteContent);
 
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
-        }
+        //     // Assert
+        //     response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+        // }
     }
 }

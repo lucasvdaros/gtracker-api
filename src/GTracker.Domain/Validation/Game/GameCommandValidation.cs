@@ -17,7 +17,7 @@ namespace GTracker.Domain.Validation.Game
 
         protected void ValidateAcquisitionDate()
         {
-            RuleFor(f => f.AquisicionDate)
+            RuleFor(f => f.AcquisicionDate)
                 .NotEmpty()
                     .WithMessage("Date is required");
         }

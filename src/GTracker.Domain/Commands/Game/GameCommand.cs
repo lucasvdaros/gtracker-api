@@ -6,9 +6,9 @@ namespace GTracker.Domain.Commands.Game
     public abstract class GameCommand : Command
     {
         public int Id { get; set; }
-        public string Name { get; protected set; }
-        public DateTime? AquisicionDate { get; protected set; }
-        public int Kind { get; protected set; }
-        public string Observation { get; protected set; }
+        public string Name { get; set; }
+        public DateTime? AcquisicionDate { get; set; }
+        public int Kind { get; set; }
+        public string Observation { get; set; }
     }
 }
