@@ -7,7 +7,7 @@ namespace GTracker.Domain.EntityModel
     public class Game : Entity
     {
         public string Name { get; set; }
-        public DateTime AquisicionDate { get; set; }
+        public DateTime AcquisicionDate { get; set; }
         public int Kind { get; set; }
         public string Observation { get; set; }
         public IList<LoanGame> LoanGames { get; set; }

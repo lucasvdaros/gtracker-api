@@ -16,7 +16,7 @@ namespace GTracker.Infra.Data.Mapping
                 .IsRequired()
                 .HasColumnName("name");
 
-            builder.Property(c => c.AquisicionDate)
+            builder.Property(c => c.AcquisicionDate)
                 .IsRequired()
                 .HasColumnName("dt_acquisition");
 

@@ -26,12 +26,12 @@ namespace GTracker.Infra.Data.Repository
 
             if (dtbeg != null)
             {
-                query = query.Where(u => u.AquisicionDate >= dtbeg);
+                query = query.Where(u => u.AcquisicionDate >= dtbeg);
             }
 
             if (dtend != null)
             {
-                query = query.Where(u => u.AquisicionDate <= dtend);
+                query = query.Where(u => u.AcquisicionDate <= dtend);
             }
 
             if (kind != null)

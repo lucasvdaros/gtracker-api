@@ -1,0 +1,26 @@
+[
+    {
+        "Name":"FIFA 2021",
+        "AcquisicionDate": "2020-07-07",
+        "Kind":1,
+        "Observation":"Comprado a vista"
+    },
+    {
+        "Name":"CS GO",
+        "AcquisicionDate": "2026-02-14",
+        "Kind":1,
+        "Observation":""
+    },
+    {
+        "Name":"Call of Duty",
+        "AcquisicionDate": "2017-02-01",
+        "Kind":5,
+        "Observation":"Ganhado"
+    },
+    {
+        "Name":"GTA San Andreas",
+        "AcquisicionDate": "2015-04-29",
+        "Kind":3,
+        "Observation":""
+    }    
+]

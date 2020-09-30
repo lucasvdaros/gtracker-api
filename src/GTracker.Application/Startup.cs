@@ -1,6 +1,7 @@
+using System;
 using GTracker.Application.Filter;
-using GTracker.Domain.Core.Notification;
 using GTracker.Infra.CrossCutting.IoC.DependencyInjection;
+using GTracker.Infra.Data.Test;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,7 +54,7 @@ namespace GTracker.Application
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -83,6 +84,8 @@ namespace GTracker.Application
             });
 
             app.UseSwaggerSetup();
+
+            serviceProvider.GetService<SeedDataService>().FeedDb().Wait();
         }
     }
 }

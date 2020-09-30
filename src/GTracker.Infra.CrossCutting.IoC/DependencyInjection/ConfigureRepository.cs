@@ -6,6 +6,7 @@ using GTracker.Domain.Interface.Repository;
 using GTracker.Infra.Data.Repository;
 using GTracker.Domain.Core.Interface;
 using GTracker.Infra.Data.Uow;
+using GTracker.Infra.Data.Test;
 
 namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
 {
@@ -25,7 +26,9 @@ namespace GTracker.Infra.CrossCutting.IoC.DependencyInjection
             serviceCollection.AddScoped<IFriendRepository, FriendRepository>();
             serviceCollection.AddScoped<IGameRepository, GameRepository>();
             serviceCollection.AddScoped<ILoanRepository, LoanRepository>();
-            serviceCollection.AddScoped<ILoanGameRepository, LoanGameRepository>();            
+            serviceCollection.AddScoped<ILoanGameRepository, LoanGameRepository>();
+
+            serviceCollection.AddTransient<SeedDataService>();            
         }
     }
 }

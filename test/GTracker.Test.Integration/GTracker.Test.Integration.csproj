@@ -8,15 +8,27 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />         
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.8" />         
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />    
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\GTracker.Application\GTracker.Application.csproj" />
+    <ProjectReference Include="..\..\src\GTracker.Domain\GTracker.Domain.csproj" />
+    <ProjectReference Include="..\..\src\GTracker.Infra.CrossCutting.IoC\GTracker.Infra.CrossCutting.IoC.csproj" />
+    <ProjectReference Include="..\..\src\GTracker.Infra.Data\GTracker.Infra.Data.csproj" />    
   </ItemGroup>
 
 </Project>
