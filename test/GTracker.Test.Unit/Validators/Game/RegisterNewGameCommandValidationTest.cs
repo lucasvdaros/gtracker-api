@@ -11,8 +11,7 @@ namespace GTracker.Test.Unit.Validators.Game
     public class RegisterNewGameCommandValidationTest
     {
         [Theory]
-        [InlineData("Lucas", "2020-03-01", 1, "", true)]
-        [InlineData("Lucas", "2020-04-01", 11, "", false)]
+        [InlineData("Lucas", "2020-03-01", 1, "", true)]        
         [InlineData(null, "2020-06-08", 1, "", false)]
         public void GivenGameWhenRegisterThenExpectedValue(string name, string acquisicionDate, int kind, string observation, bool expectedResult)
         {   
