@@ -12,6 +12,10 @@ The project's goals is to organize eletronic games and manage its loans to frien
 3. Go to `http://localhost:5000` to access the application
 4. Run `docker-compose down --rmi all` to stop the application and erase the generated images
 
+### Credentials to test
+1. login: admin
+2. password: senhalegal
+
 ## Technologies implemented:
 * ASP.NET Core 3.1 (with .NET Core 3.1)
 * Entity Framework Core 3.1.5
