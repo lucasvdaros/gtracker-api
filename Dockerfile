@@ -9,6 +9,7 @@ COPY src/GTracker.Infra.CrossCutting.IoC/*.csproj ./src/GTracker.Infra.CrossCutt
 COPY src/GTracker.Infra.Data/*.csproj ./src/GTracker.Infra.Data/
 COPY src/GTracker.Service/*.csproj ./src/GTracker.Service/
 COPY test/GTracker.Test.Integration/*.csproj ./test/GTracker.Test.Integration/
+COPY test/GTracker.Test.Unit/*.csproj ./test/GTracker.Test.Unit/
 RUN dotnet restore
 COPY src/. ./src/
 WORKDIR /app
