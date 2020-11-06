@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -74,36 +75,205 @@ namespace GTracker.Test.Integration.Scenario
 
             // Act
             var response = await _client.GetAsync("/gtracker/game/2");
+            var game = JsonConvert.DeserializeObject<GameDTO>(await response.Content.ReadAsStringAsync());
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
+            game.Should().NotBeNull();
+            game.Id.Should().Be(2);
         }
 
-        // [Fact]
-        // public async Task Post_GivenGame_WhenValid_ThenAcceptResponse()
-        // {
-        //     // Arrange
-        //     var newGame = new CreateGameDTO
-        //     {
-        //         Name = "FIFA",
-        //         AquisicionDate = DateTime.Now.AddDays(-30),
-        //         Kind = "1",
-        //         Observation = "UM jogo muito legal"
-        //     };
+        [Fact]
+        public async Task Post_GivenGame_WhenNoToken_ThenUnauhorizedResponse()
+        {
+            // Arrange
+            var newGame = new CreateGameDTO
+            {
+                Name = "FIFA",
+                AcquisicionDate = DateTime.Now.AddDays(-30),
+                Kind = "1",
+                Observation = "UM jogo muito legal"
+            };
 
-        //     var myContent = JsonConvert.SerializeObject(newGame);
+            var myContent = JsonConvert.SerializeObject(newGame);
 
-        //     var buffer = Encoding.UTF8.GetBytes(myContent);
-        //     var byteContent = new ByteArrayContent(buffer);
-        //     byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        //     var token = await GetToken();
-        //     _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        //     // Act
-        //     var response = await _client.PostAsync("/gtracker/game", byteContent);
+            // Act
+            var response = await _client.PostAsync("/gtracker/game", byteContent);
 
-        //     // Assert
-        //     response.StatusCode.Should().Be(HttpStatusCode.Accepted);
-        // }
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+
+        [Fact]
+        public async Task Post_GivenGame_WhenAuthorized_ThenAcceptResponse()
+        {
+            // Arrange
+            var newGame = new CreateGameDTO
+            {
+                Name = "FIFA",
+                AcquisicionDate = DateTime.Now.AddDays(-30),
+                Kind = "1",
+                Observation = "UM jogo muito legal"
+            };
+
+            var myContent = JsonConvert.SerializeObject(newGame);
+
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var token = await GetToken();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            // Act
+            var response = await _client.PostAsync("/gtracker/game", byteContent);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+        }
+        
+        [Fact]
+        public async Task Post_GivenGame_WhenInvalid_ThenBadRequestResponse()
+        {
+            // Arrange
+            var newGame = new CreateGameDTO
+            {
+                Name = string.Empty,
+                AcquisicionDate = null,
+                Kind = "99",
+                Observation = "UM jogo muito legal"
+            };
+
+            var myContent = JsonConvert.SerializeObject(newGame);
+
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var token = await GetToken();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            // Act
+            var response = await _client.PostAsync("/gtracker/game", byteContent);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task Get_GivenGames_WhenNoToken_ThenUnauhorizedResponse()
+        {
+            // Act
+            var response = await _client.GetAsync("/gtracker/game");
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+
+        [Fact]
+        public async Task Get_GivenGames_WhenAuthorized_ThenOkResponse()
+        {
+            // Arrage
+            var token = await GetToken();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            // Act
+            var response = await _client.GetAsync("/gtracker/game");
+            var itens = JsonConvert.DeserializeObject<List<GameDTO>>(await response.Content.ReadAsStringAsync());
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            itens.Should().NotBeNull();
+            itens.Count.Should().BeGreaterThan(1);
+        }
+
+        [Fact]
+        public async Task Put_GivenGame_WhenNoToken_ThenAcceptResponse()
+        {
+            // Arrage  
+            UpdateGameDTO gameUpdated = new UpdateGameDTO
+            {
+                AcquisicionDate = DateTime.Now,
+                Kind = 1,
+                Name = "Tentativa de atualizar nome",
+                Observation = "Ajsutando observação de atualização desse game"
+            };
+
+            var myContent = JsonConvert.SerializeObject(gameUpdated, Formatting.Indented);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            // Act
+            var response = await _client.PutAsync("/gtracker/game/2", byteContent);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
+
+        [Fact]
+        public async Task Put_GivenGame_WhenAuthorized_ThenAcceptResponse()
+        {
+            // Arrage
+            var token = await GetToken();
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var responseGame = await _client.GetAsync("/gtracker/game/2");
+            var game = JsonConvert.DeserializeObject<GameDTO>(await responseGame.Content.ReadAsStringAsync());
+
+            UpdateGameDTO gameUpdated = new UpdateGameDTO
+            {
+                AcquisicionDate = game.AcquisicionDate,
+                Kind = game.Kind,
+                Name = game.Name,
+                Observation = "Ajsutando observação de atualização desse game"
+            };
+
+            var myContent = JsonConvert.SerializeObject(gameUpdated, Formatting.Indented);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            // Act
+            var response = await _client.PutAsync("/gtracker/game/2", byteContent);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+        }
+
+        [Fact]
+        public async Task Put_GivenGame_WhenInvalid_ThenBadRequestResponse()
+        {
+            // Arrage
+            var token = await GetToken();
+            _client.DefaultRequestHeaders.Clear();
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            var responseGame = await _client.GetAsync("/gtracker/game/2");
+            var game = JsonConvert.DeserializeObject<GameDTO>(await responseGame.Content.ReadAsStringAsync());
+
+            UpdateGameDTO gameUpdated = new UpdateGameDTO
+            {
+                AcquisicionDate = null,
+                Kind = game.Kind,
+                Name = game.Name,
+                Observation = "Ajsutando observação de atualização desse game"
+            };
+
+            var myContent = JsonConvert.SerializeObject(gameUpdated, Formatting.Indented);
+            var buffer = Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            // Act
+            var response = await _client.PutAsync("/gtracker/game/2", byteContent);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        }
     }
 }
