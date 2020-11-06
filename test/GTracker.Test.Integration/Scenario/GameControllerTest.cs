@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GTracker.Application;
+using GTracker.Domain.Core.Notification;
 using GTracker.Domain.DTO.Game;
 using GTracker.Domain.DTO.User;
 using GTracker.Test.Integration.Fixture;
@@ -244,23 +245,32 @@ namespace GTracker.Test.Integration.Scenario
             response.StatusCode.Should().Be(HttpStatusCode.Accepted);
         }
 
-        [Fact]
-        public async Task Put_GivenGame_WhenInvalid_ThenBadRequestResponse()
+        [Theory]
+        [InlineData(null, 2, "Fifa 2021", "Uma observação sobre o jogo", 1)]
+        [InlineData(null, 2, "Fifa 2021", "", 1)]
+        [InlineData("2020-11-06",1,null, "Uma observação sobre o jogo", 1)]
+        [InlineData("2020-11-06", 1, null, "", 1)]
+        [InlineData(null, -1, null, "Uma observação sobre o jogo", 2)]
+        public async Task Put_GivenGame_WhenInvalid_ThenBadRequestResponse(string acquisicionDate, int kind, string name, string observation, int qntErrors)
         {
             // Arrage
             var token = await GetToken();
             _client.DefaultRequestHeaders.Clear();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            var responseGame = await _client.GetAsync("/gtracker/game/2");
-            var game = JsonConvert.DeserializeObject<GameDTO>(await responseGame.Content.ReadAsStringAsync());
+            DateTime result;
+            DateTime? finalDate = null;
+            if(DateTime.TryParse(acquisicionDate, out result))
+            {
+                finalDate = result;
+            }           
 
             UpdateGameDTO gameUpdated = new UpdateGameDTO
             {
-                AcquisicionDate = null,
-                Kind = game.Kind,
-                Name = game.Name,
-                Observation = "Ajsutando observação de atualização desse game"
+                AcquisicionDate = finalDate,
+                Kind = kind,
+                Name = name,
+                Observation = observation
             };
 
             var myContent = JsonConvert.SerializeObject(gameUpdated, Formatting.Indented);
@@ -270,10 +280,11 @@ namespace GTracker.Test.Integration.Scenario
 
             // Act
             var response = await _client.PutAsync("/gtracker/game/2", byteContent);
+            var notifications = JsonConvert.DeserializeObject<List<DomainNotification>>(await response.Content.ReadAsStringAsync());
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-
+            notifications.Should().HaveCount(qntErrors);
         }
     }
 }
