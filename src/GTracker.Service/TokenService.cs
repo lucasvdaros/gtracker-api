@@ -23,11 +23,11 @@ namespace GTracker.Service
         public LoginResponseUserDTO TokenObject(UserDTO user)
         {
             var appSettingsSection = _Configuration.GetSection("AppSettings");
-            var tokenSettings = appSettingsSection.Get<TokenConfiguration>();
+            var tokenSettings = appSettingsSection.Get<TokenConfiguration>();            
             var key = Encoding.ASCII.GetBytes(tokenSettings.Key);
             var handler = new JwtSecurityTokenHandler();
 
-            ClaimsIdentity identity = new ClaimsIdentity(
+            var identity = new ClaimsIdentity(
                 new GenericIdentity(user.Name),
                 new[]
                 {

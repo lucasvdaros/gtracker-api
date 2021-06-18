@@ -48,9 +48,7 @@ namespace GTracker.Application
 
             services.AddSwaggerSetup();
 
-            services.AddMvc(options => options.Filters.Add<NotificationFilter>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+            services.AddMvc(options => options.Filters.Add<NotificationFilter>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

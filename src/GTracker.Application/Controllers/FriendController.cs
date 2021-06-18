@@ -41,7 +41,7 @@ namespace GTracker.Application.Controllers
             try
             {
                 var friends = await _friendService.GetAll();
-                return friends.Count() != 0 ? (IActionResult)Ok(friends) : (IActionResult)NoContent();
+                return friends.Any() ? (IActionResult)Ok(friends) : (IActionResult)NoContent();
             }
             catch (ArgumentException e)
             {

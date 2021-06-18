@@ -1,5 +1,5 @@
 # What is GTracker?
-It's an open source project, written in .NET Core, currently in version 3.1.
+It's an open source project, written in .NET 5.0
 The project's goals is to organize eletronic games and manage its loans to friends and others.
 
 ## How to use:
@@ -17,11 +17,11 @@ The project's goals is to organize eletronic games and manage its loans to frien
 2. password: senhalegal
 
 ## Technologies implemented:
-* ASP.NET Core 3.1 (with .NET Core 3.1)
-* Entity Framework Core 3.1.5
-* FluentValidation 9.0.0
-* Swagger UI 5.5.0
-* MediatR 8.1.0
+* ASP.NET Core 5.0 (with .NET Core 5.0)
+* Entity Framework Core 5.0.7
+* FluentValidation 10.2.3
+* Swagger UI 6.1.4
+* MediatR 9.0.0
 * MySql Database Connection
 
 ## Architecture:
