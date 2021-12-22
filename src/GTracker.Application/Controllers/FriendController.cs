@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using GTracker.Domain.Core.Notification;
 using GTracker.Domain.DTO.Friend;
 using GTracker.Domain.Interface.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GTracker.Application.Controllers
@@ -21,62 +24,43 @@ namespace GTracker.Application.Controllers
 
         [HttpPost]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(List<DomainNotification>), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> Post([FromBody] CreateFriendDTO friend)
         {
-            try
-            {
-                await _friendService.Post(friend);
-                return Accepted();
-            }
-            catch (Exception e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
+            await _friendService.Post(friend);
+            return Accepted();
         }
 
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(IEnumerable<FriendDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll()
         {
-            try
-            {
-                var friends = await _friendService.GetAll();
-                return friends.Any() ? (IActionResult)Ok(friends) : (IActionResult)NoContent();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
+            var friends = await _friendService.GetAll();
+            return friends.Any() ? Ok(friends) : NoContent();
         }
 
         [HttpGet("{id}")]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(FriendDTO), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetbyId([FromRoute] int id)
         {
-            try
-            {
-                var friend = await _friendService.GetById(id);
-                return friend != null ? (IActionResult)Ok(friend) : (IActionResult)NoContent();
-            }
-            catch (ArgumentException e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
+            var friend = await _friendService.GetById(id);
+            return friend != null ? Ok(friend) : NoContent();
         }
 
         [HttpPut("{id}")]
         [Authorize]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(typeof(List<DomainNotification>), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Put([FromRoute] int id, [FromBody] UpdateFriendDTO friend)
         {
-            try
-            {
-                await _friendService.Update(id, friend);
-                return Accepted();
-            }
-            catch (Exception e)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError, e.Message);
-            }
+            await _friendService.Update(id, friend);
+            return Accepted();
         }
     }
 }

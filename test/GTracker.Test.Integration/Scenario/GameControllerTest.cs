@@ -47,7 +47,7 @@ namespace GTracker.Test.Integration.Scenario
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            // Assert
+            // Act
             var response = await _client.PostAsync("/gtracker/user/login", byteContent);
 
             // Assert

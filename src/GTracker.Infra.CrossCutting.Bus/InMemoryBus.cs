@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using FluentValidation.Results;
 using GTracker.Domain.Core.Commands;
 using GTracker.Domain.Core.Events;
 using GTracker.Domain.Core.Interface;

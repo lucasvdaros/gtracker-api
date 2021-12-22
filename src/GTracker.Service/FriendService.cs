@@ -25,16 +25,9 @@ namespace GTracker.Service
             _friendRepository = friendRepository;
         }
 
-        public async Task<IEnumerable<FriendDTO>> GetAll()
-        {
-            return (await _friendRepository.GetAll())
-                    .Select(f => _Mapper.Map<FriendDTO>(f));
-        }
+        public async Task<IEnumerable<FriendDTO>> GetAll() => (await _friendRepository.GetAll()).Select(f => _Mapper.Map<FriendDTO>(f));        
 
-        public async Task<FriendDTO> GetById(int id)
-        {
-            return _Mapper.Map<FriendDTO>(await _friendRepository.GetById(id));
-        }
+        public async Task<FriendDTO> GetById(int id) => _Mapper.Map<FriendDTO>(await _friendRepository.GetById(id));        
 
         public async Task Post(CreateFriendDTO friend)
         {

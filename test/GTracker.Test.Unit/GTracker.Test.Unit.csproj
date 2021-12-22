@@ -27,4 +27,11 @@
     <ProjectReference Include="..\..\src\GTracker.Infra.Data\GTracker.Infra.Data.csproj" />    
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Validators\Friend\" />
+    <Folder Include="Validators\Loan\" />
+    <Folder Include="Validators\User\" />
+  </ItemGroup>
+
 </Project>

@@ -2,8 +2,6 @@ using FluentAssertions;
 using GTracker.Domain.Validation.Game;
 using GTracker.Domain.Commands.Game;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace GTracker.Test.Unit.Validators.Game

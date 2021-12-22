@@ -5,3 +5,6 @@ obj/
 bin/
 
 debug.log
+
+gtracker-api-key
+gtracker-api-key.pub

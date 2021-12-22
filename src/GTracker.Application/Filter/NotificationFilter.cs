@@ -33,5 +33,4 @@ namespace GTracker.Application.Filter
             await next();
         }
     }
-
 }

@@ -32,9 +32,6 @@ namespace GTracker.Domain.Core.Notification
              return Task.CompletedTask;
         }
 
-        public virtual List<DomainNotification> GetNotifications()
-        {
-            return _notifications;
-        }
+        public virtual List<DomainNotification> GetNotifications() => _notifications;        
     }
 }
