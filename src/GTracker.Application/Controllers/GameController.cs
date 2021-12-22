@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using GTracker.Domain.DTO.Game;
 using GTracker.Domain.Interface.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GTracker.Application.Controllers
@@ -36,6 +38,7 @@ namespace GTracker.Application.Controllers
 
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(typeof(IEnumerable<GameDTO>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Get([FromQuery] string name = null,
                                             [FromQuery] DateTime? dtbeg = null,
                                             [FromQuery] DateTime? dtend = null,
